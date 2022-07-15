@@ -2,4 +2,6 @@
 Chrome Extension
 
 1. Highlight a certain block of text
-2. Click the extension button (or something) to trigger the saving of the text // change manifest.json action from "default_popup"
+2. Trigger saving of highlighted texxt
+3. On clicking the Chrome extension, display all notes in a "post-it" with scroll bar
+4. 

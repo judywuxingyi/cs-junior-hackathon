@@ -8,11 +8,11 @@
 } */
 
 #display {
-    background: repeating-linear-gradient(45deg,
-            rgba(247, 226, 134, 0.8),
-            rgba(255, 255, 255, 1) 10px,
-            rgba(247, 226, 134, 0.8) 10px,
-            rgba(255, 255, 255, 1) 10px);
+    background: repeating-linear-gradient(-45deg,
+            rgb(255, 225, 90, 0.5),
+            rgba(255, 255, 90, 0.5) 3px,
+            rgb(255, 255, 255, 1) 3px,
+            rgba(255, 255, 255, 1) 6px);
     height: 500px;
     width: 350px;
     outline: none;
@@ -23,7 +23,7 @@
     margin: auto;
     overflow: auto;
     /* background-image: linear-gradient(rgba(247, 226, 134, 0.5), rgba(233, 211, 105, 0.5)); */
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Courier New', sans-serif;
     font-size: 15px;
     color: rgb(255, 255, 255);
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.11);
