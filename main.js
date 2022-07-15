@@ -1,36 +1,44 @@
-let highlights = {};
-
-// stores chrome extension display in a variable
-let display = document.getElementById("display");
-
-// stores chrome ext button in a variable
-let saveButton = document.getElementById("save-button");
-
-// onclick save button, invoke saveAndUpdate 
-saveButton.addEventListener("click", () => {
-  let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    function: saveAndUpdate,
-  });
-});
-
-// function - display all current highlights
-function displayHighlights() {
-  // iterate through highlights object
-    // create div element
-    // assign innerText of div element to display
-    // append child to display
+// helper function to create element and append to display
+function createElement(parent, content, type) {
+  const newElement = document.createElement(type);
+  newElement.innerHTML = content;
+  parent.appendChild(newElement);
+  return newElement;
 }
 
-// function - save highlighted or selected text to object and update display with 
-function saveAndUpdate() {
+document.addEventListener("DOMContentLoaded", function () {
+  let display = document.getElementById("display");
+  let saveButton = document.getElementById("save-button");
+
+  // accesses message from background.js
+  chrome.storage.sync.get("message", ({ message }) => {
+    const newMessage = createElement(display, message, "div");
+    newMessage.setAttribute("class", "messages");
+  });
+
+  // testing addEventListener on clicking the save button within extension
+  saveButton.addEventListener("click", () => {
+    console.log("hello, does this work");
+    const highlight = prompt(); // user input
+    console.log(highlight); // check on console
+    const highlightEl = createElement(display, highlight, "div"); // append to display
+    highlightEl.setAttribute("class", "messages");
+  });
+
+  // onclick save button, invoke saveAndUpdate 
+  // saveButton.addEventListener("click", async () => {
+  //   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  //   chrome.scripting.executeScript({
+  //     target: { tabId: tab.id },
+  //     function: saveAndUpdate,
+  //   });
+  // });
+
   // get highlighted text
   function getHighlight() {
     let txt = "";
     if (window.getSelection) {
-        txt = window.getSelection();
+        txt = window.getSelection().toString();
     } else if (document.getSelection) {
         txt = document.getSelection();
     } else if (document.selection) {
@@ -38,18 +46,19 @@ function saveAndUpdate() {
     }
     return txt;
   };
+    
+  // function - save highlighted or selected text to object and update display with 
+  function saveAndUpdate() {
+    console.log("inside saveAndUpdate func");
 
-  // store highlighted text in variable
-  const text = getHighlight();
-  
-  // add highlighted text to object with key as date object + value as text
-  // let now = new Date();
-  // highlights[now.toDateString()] = text;
+    // store highlighted text in variable
+    
+    // add highlighted text to object with key as date object + value as text
 
-  // update object output on display by invoking displayHighlights()
-  // return displayHighlights();
+    // update object output on display by invoking displayHighlights()
+  }
+});
 
-}
 
 
 
@@ -63,7 +72,7 @@ function saveAndUpdate() {
 //   changeColor.style.backgroundColor = color;
 // });
 
-// When the button is clicked, inject setPageBackgroundColor into current page
+// // When the button is clicked, inject setPageBackgroundColor into current page
 // changeColor.addEventListener("click", async () => {
 //   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
@@ -73,8 +82,8 @@ function saveAndUpdate() {
 //   });
 // });
 
-// The body of this function will be executed as a content script inside the
-// current page
+// // The body of this function will be executed as a content script inside the
+// // current page
 // function setPageBackgroundColor() {
 //   chrome.storage.sync.get("color", ({ color }) => {
 //     document.body.style.backgroundColor = color;
