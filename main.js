@@ -6,37 +6,55 @@ function createElement(parent, content, type) {
   return newElement;
 }
 
-chrome.runtime.getBackgroundPage(function (bg) {
-  if (bg.sessionDataHTML) {
-    document.body.innerHTML = bg.sessionDataHTML;
-  }
-  setInterval(function () {
-    bg.sessionDataHTML = document.body.innerHTML
-  }, 1000);
+// chrome.runtime.getBackgroundPage(function (bg) {
+//   if (bg.sessionDataHTML) {
+//     document.body.innerHTML = bg.sessionDataHTML;
+//   }
+//   setInterval(function () {
+//     bg.sessionDataHTML = document.body.innerHTML
+//   }, 1000);
 
-  //do the rest of your work here.
+//   //do the rest of your work here.
 
-});
+// });
 
 document.addEventListener("DOMContentLoaded", function () {
+  
   let display = document.getElementById("display");
   let saveButton = document.getElementById("save-btn");
   let userInput = document.getElementById("user-input");
 
   // accesses message from background.js
-  chrome.storage.sync.get("message", ({ message }) => {
-    const newMessage = createElement(display, message, "div");
-    newMessage.setAttribute("class", "messages");
+  // chrome.storage.sync.get("message", ({ message }) => {
+  //   const newMessage = createElement(display, message, "div");
+  //   newMessage.setAttribute("class", "messages");
+  // });
+
+  chrome.storage.sync.get(null, function(messages) {
+    let allMessages = Object.entries(messages);
+    for (const [key, value] of allMessages) {
+      const newMessage = createElement(display, value, "div");
+      newMessage.setAttribute("class","messages");
+    }
   });
 
   // testing addEventListener on clicking the save button within extension
   saveButton.addEventListener("click", () => {
-    console.log("hello, does this work");
-    const highlight = userInput.value; // user input
-    console.log(highlight); // check on console
-    const highlightEl = createElement(display, highlight, "div"); // append to display
-    highlightEl.setAttribute("class", "messages");
+    // console.log("hello, does this work");
+    const newMessage = userInput.value; // user input
+    const currDateTime = new Date();
+    chrome.storage.sync.set({newMessage}, function() {
+      const msgEl = createElement(display, newMessage, "div"); // append to display
+      msgEl.setAttribute("class", "messages");
+    });
+
+    // console.log(highlight); // check on console
+
     userInput.value = "";
+
+    // chrome.storage.sync.get("message", ({ message }) => {
+    //   console.log(message);
+    // });
 
     // let key = (Math.random() + 1).toString(36).substring(7);
     // chrome.storage.local.set({ key: highlight }, function () {
