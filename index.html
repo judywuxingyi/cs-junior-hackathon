@@ -1,13 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&family=Ubuntu&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-    <button id="save-button">save</button>
-    <p id ="title">codenotes or whateva</p>
-    <div id="display">
+</head>
+
+<body>
+    <div id="container">
+        <div id="title-container">
+            <p id="title">noted<span class="material-icons">
+                    edit_square
+                </span></p>
+        </div>
+        <div id="display">
+            <div id="messages" class="messages"> 
+                
+            </div>
+        </div>
+        <div id="footer-container">
+            <textarea id="user-input"></textarea>
+            <button type="button" id="save-btn">Save</button>
+        </div>
+
+        <!-- <button id="save-button">save</button> -->
     </div>
+
     <script src="main.js"></script>
-  </body>
+</body>
+
 </html>
