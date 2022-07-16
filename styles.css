@@ -6,9 +6,20 @@
     user-select: none;
     border-radius: 5px;
 } */
+body,
+html {
+    margin: 0;
+    background-color: #ffe15a4d;
 
-#save-button {
-    width: 352px;
+}
+
+#container {
+    /* background-color: #ffe15a4d; */
+    background-color: #ffd43b;
+}
+
+/* #save-button {
+    width: 90%;
     margin-bottom: 5px;
     display: flex;
     margin: 0 auto;
@@ -17,32 +28,26 @@
     color: darkgrey;
     font-weight: bold;
     font-stretch: extra-expanded;
-
     background-color: white;
     border-radius: 5px;
     border: 2px dashed darkgrey;
-    box-shadow: 2px 2px lightgrey;
 
-}
+} */
 
 #display {
     margin: 0 auto;
     overflow: auto;
-    height: 500px;
+    height: 400px;
     width: 350px;
-    background: repeating-linear-gradient(-45deg,
-            rgb(255, 225, 90, 0.3),
-            rgba(255, 255, 90, 0.3) 3px,
-            rgb(255, 255, 255, 1) 3px,
-            rgba(255, 255, 255, 1) 6px);
+    background: rgb(255, 248, 215);
 
-    font-family: 'Helvetica', sans-serif;
-    font-size: 12px;
+    /* font-family: 'Helvetica', sans-serif; */
+    font-size: 16px;
     color: black;
     border: 2px dashed rgb(255, 225, 90, 0.5);
     border-radius: 5px;
-    box-shadow: 2px 2px darkgrey;
     padding: 5px 5px 5px 5px;
+    margin: 5px;
 
     /* flex-direction: column-reverse; */
     /* background-image: linear-gradient(rgba(247, 226, 134, 0.5), rgba(233, 211, 105, 0.5)); */
@@ -50,25 +55,64 @@
 }
 
 #title {
-    height: 15px;
-    color: black;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-style: italic;
-    font-size: 36px;
-    font-weight: bolder;
-    font-stretch: extra-expanded;
-    color: rgb(85, 165, 200);
-    text-shadow: 3px 3px lightgrey;
-    text-align: center;
-    margin-top: 5px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #183153;
+    margin: 0 0;
+    padding: 15px;
 }
 
+#title span {
+    float: right;
+    padding-top: 3px;
+}
+
+
 #messages {
-    display: inline-block;
-    font-size: 16px;
+    /* display: inline-block; */
     margin: 0 auto;
+
     font-family: courier;
     color: rgb(60, 60, 60);
+    background-color: white;
+    border-radius: 3px;
+}
+
+#input-container {
+    padding: 10px;
+    max-width: 360px;
+    color: rgb(60, 60, 60);
+    text-align: center;
+}
+
+#user-input {
+    width: 97%;
+    height: 57px;
+    background-color: #f0f4fa;
+    border: 1px solid #183053;
+    border-radius: 5px;
+}
+
+#save-btn {
+    width: 98.5%;
+    height: 40px;
+
+    position: relative;
+    border-width: 0.125em;
+    border-style: solid;
+    border-radius: 0.3em;
+    box-shadow: 0.275em 0.275em 0 #183153;
+
+
+    background: rgb(255, 248, 215);
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: center;
+    color: #183153;
+    font-weight: 600;
+    margin-bottom: 30px;
 }
 
 /* button {
