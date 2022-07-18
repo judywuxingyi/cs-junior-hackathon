@@ -9,12 +9,13 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.browserAction.onClick.addListener(() => {
-    chrome.storage.sync.get(null, function(messages) {
-      let allMessages = Object.entries(messages);
-      for (const [key, value] of allMessages) {
-        console.log(key + ": " + value);
-        const newMessage = createElement(display, value, "div");
-        newMessage.setAttribute("class", "messages");
-      }
-    });
+
+  chrome.storage.sync.get(null, function(messages) {
+    let allMessages = Object.entries(messages);
+    for (const [key, value] of allMessages) {
+      console.log(key + ": " + value);
+      const newMessage = createElement(display, value, "div");
+      newMessage.setAttribute("class", "messages");
+    }
   });
+});

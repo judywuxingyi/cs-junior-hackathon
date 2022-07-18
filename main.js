@@ -19,7 +19,9 @@ function createElement(parent, content, type) {
 // });
 
 document.addEventListener("DOMContentLoaded", function () {
-  
+  // chrome.storage.sync.clear();
+
+
   let display = document.getElementById("display");
   let saveButton = document.getElementById("save-btn");
   let userInput = document.getElementById("user-input");
@@ -31,42 +33,42 @@ document.addEventListener("DOMContentLoaded", function () {
   // });
 
   chrome.storage.sync.get(null, function(messages) {
+    console.log(messages);
     let allMessages = Object.entries(messages);
     for (const [key, value] of allMessages) {
+      console.log(key + ": " + value);
       const newMessage = createElement(display, value, "div");
       newMessage.setAttribute("class","messages");
     }
   });
 
   // testing addEventListener on clicking the save button within extension
-  saveButton.addEventListener("click", () => {
+  saveButton.addEventListener("click", async () => {
     // console.log("hello, does this work");
-    const newMessage = userInput.value; // user input
-    const currDateTime = new Date();
-    chrome.storage.sync.set({newMessage}, function() {
-      const msgEl = createElement(display, newMessage, "div"); // append to display
-      msgEl.setAttribute("class", "messages");
-    });
+    if (userInput.value === "") {
+      const [tab] = await chrome.tabs.query({active: true, currentWindow: true});
+      let result;
+      try {
+        [{result}] = await chrome.scripting.executeScript({
+          target: {tabId: tab.id},
+          function: () => getSelection().toString(),
+        });
+      } catch (e) {
+        return; // ignoring an unsupported page like chrome://extensions
+      }
+      display.append(result);
+    } else {
+      const newMessage = userInput.value; // user input
+      const currDateTime = new Date();
+      chrome.storage.sync.set({[currDateTime]: newMessage}, function () {
+        const msgEl = createElement(display, newMessage, "div"); // append to display
+        msgEl.setAttribute("class", "messages");
+      });
+      userInput.value = "";
+    }
 
-    // console.log(highlight); // check on console
 
-    userInput.value = "";
-
-    // chrome.storage.sync.get("message", ({ message }) => {
-    //   console.log(message);
-    // });
-
-    // let key = (Math.random() + 1).toString(36).substring(7);
-    // chrome.storage.local.set({ key: highlight }, function () {
-    //   console.log('Value is set to ' + highlight);
-    // });
-
-    // chrome.storage.local.get(['key'], function (result) {
-    //   console.log('Value currently is ' + result.key);
-    // });
   });
-
-
 
   // onclick save button, invoke saveAndUpdate 
   // saveButton.addEventListener("click", async () => {
@@ -102,7 +104,20 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+$(function(){
+  $('#paste').click(function(){pasteSelection();});
+});
 
+function pasteSelection() {
+  chrome.tabs.query({active:true, windowId: chrome.windows.WINDOW_ID_CURRENT}, 
+  function(tab) {
+    chrome.tabs.sendMessage(tab[0].id, {method: "getSelection"}, 
+    function(response){
+      var text = document.getElementById('text'); 
+      text.innerHTML = response.data;
+    });
+  });
+}
 
 
 
